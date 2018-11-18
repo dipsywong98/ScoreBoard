@@ -2,7 +2,7 @@
   <div class="flex">
     <div class="item">
       <team-column
-        color="red"
+        :color="team0.color||'red'"
         :teamname="team0.teamname"
         :scores="team0.scores"
         :violations="team0.violations"
@@ -12,12 +12,13 @@
     <div class="item">
       <img alt="Vue logo" src="../assets/logo.png">
       <h1>Robot Design Contest</h1>
-      <Timer />
+      <Timer :due-time="dueTime"/>
+      <h1>{{stateText}}</h1>
     </div>
 
     <div class="item">
       <team-column
-        color="blue"
+        :color="team1.color||'blue'"
         :teamname="team1.teamname"
         :scores="team1.scores"
         :violations="team1.violations"
@@ -28,6 +29,7 @@
 <script>
 import TeamColumn from "./TeamColumn.vue";
 import Timer from "./Timer.vue";
+import {states} from "../lib/constants"
 export default {
   name: "ScoreBoard",
   components: {
@@ -37,7 +39,13 @@ export default {
   props: {
     team0: Object,
     team1: Object,
-    startTime: Number
+    dueTime: Number,
+    state: Number
+  },
+  computed: {
+    stateText(){
+      return states[this.state]
+    }
   }
 };
 </script>

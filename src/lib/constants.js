@@ -1,4 +1,4 @@
-export default {
+const constants = {
   states: [
     'About to start',
     'Preperation',
@@ -6,3 +6,5 @@ export default {
     'Game End'
   ]
 }
+
+module.exports = constants

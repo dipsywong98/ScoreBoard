@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <div v-if="active">
-    <score-board :team0="active.team0" :team1="active.team1"/>
+    <score-board :team0="active.team0" :team1="active.team1" :dueTime="active.dueTime" :state="active.state"/>
     </div>
     <!-- <img alt="Vue logo" src="./assets/logo.png"> -->
     <!-- <HelloWorld msg="Welcome to Your Vue.js App"/> -->
