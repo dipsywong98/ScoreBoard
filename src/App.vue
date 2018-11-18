@@ -10,17 +10,8 @@
 
 <script>
 import ScoreBoard from './components/ScoreBoard.vue'
-import firebase from 'firebase'
+import firebase from './lib/firebase'
 
-let config = {
-  apiKey: "AIzaSyAkbaZU81i6c-ObknORRdh1hPoe5twKw28",
-  authDomain: "scoreboard-d.firebaseapp.com",
-  databaseURL: "https://scoreboard-d.firebaseio.com",
-  projectId: "scoreboard-d",
-  storageBucket: "scoreboard-d.appspot.com",
-  messagingSenderId: "866950274400"
-};
-firebase.initializeApp(config)
 const db = firebase.database()
 const activeRef = db.ref('active')
 
@@ -43,10 +34,7 @@ export default {
     ScoreBoard,
   },
   mounted(){
-    console.log('mounted')
-    activeRef.once('value',snapshot=>console.log(snapshot.val()))
     activeRef.on('value',snapshot=>{
-      console.log('onvalue',snapshot.val())
       this.active = snapshot.val()
     })
   },
