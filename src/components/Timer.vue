@@ -32,7 +32,7 @@ export default {
     renderTime(){const currTime = Date.now()
       const left = this.dueTime - currTime
       if(left <= 0){
-        this.renderedTime = 'Time\'s up'
+        this.renderedTime = '00:00'
       }else{
         let s = Math.floor(left/1000%60)
         if(s<10)s='0'+s
