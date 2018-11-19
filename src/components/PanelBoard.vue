@@ -10,9 +10,8 @@
       </div>
       
       <div class="item">
-        <img alt="Vue logo" src="../assets/logo.png">
-        <h1>Robot Design Contest</h1>
-        <Timer :due-time="dueTime"/>
+        <h1>Robot Design Contest Panel</h1>
+        <Timer :due-time="active.dueTime"/>
         <h1>{{stateText}}</h1>
       </div>
 
@@ -63,11 +62,11 @@ export default {
   },
   computed: {
     stateText(){
-      return states[this.state]
+      return states[this.active.state]
     }
   },
   methods:{
-    onTeamChange(id){
+    onTeamChange(){
       db.ref('active').set(this.active)
     }
   }

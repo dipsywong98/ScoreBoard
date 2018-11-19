@@ -1,5 +1,5 @@
 <template>
-  <div class="teamcolumn-root" :style="bgc">
+  <div :style="bgc">
     <p>TeamName: <input v-model="value.teamname" ref="teamname" @change="onChange"></p>
     <p>Scores: <input v-model="value.scores" ref="scores" @change="onChange"></p>
     <p>Violations: <input v-model="value.violations" ref="violations" @change="onChange"></p>
@@ -8,6 +8,7 @@
       <option value="blue">blue</option>
       <option value="green">green</option>
       </select></p>
+    <button v-for="scoreItem in scores" :key="scoreItem.name" @click="scoreItemClick(scoreItem)">{{scoreItem.name}}</button>
     <!-- <div class="teamcolumn-item">
 
     <h1 class="scoreboard">
@@ -26,6 +27,7 @@
 </template>
 
 <script>
+import scores from '../lib/score-points'
 export default {
   name: 'TeamColomn',
   props: ['value'],
@@ -36,20 +38,31 @@ export default {
         [color]: '#000000',
         red: '#000000',
         blue: '#ffffff',
-        green: '#000000'
+        green: '#ffffff'
       }[color]
       return {
-        backgroundColor: this.color,
+        backgroundColor: this.value.color,
         color: textColor
       }
-    }
+    },
+    scores(){return scores}
   },
   methods:{
-    onChange(event){
-      console.log(this.value)
+    onChange(){
       this.$emit('input',{
         ...this.value,
         // event.target.value
+      })
+    },
+    scoreItemClick(item){
+      if(item.scores){
+        this.value.scores += item.scores
+      }
+      if(item.violation){
+        this.value.violations += item.violation
+      }
+      this.$emit('input',{
+        ...this.value
       })
     }
   }
