@@ -29,7 +29,7 @@
 <script>
 import scores from '../lib/score-points'
 export default {
-  name: 'TeamColomn',
+  name: 'TeamColomnEditor',
   props: ['value'],
   computed: {
     bgc(){
@@ -55,8 +55,8 @@ export default {
       })
     },
     scoreItemClick(item){
-      if(item.scores){
-        this.value.scores += item.scores
+      if(item.score){
+        this.value.scores += item.score
       }
       if(item.violation){
         this.value.violations += item.violation

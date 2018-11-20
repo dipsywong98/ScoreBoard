@@ -3,6 +3,7 @@
     <div v-if="active">
     <score-board :team0="active.team0" :team1="active.team1" :dueTime="active.dueTime" :state="active.state"/>
     </div>
+    <div v-else>Loading</div>
     <!-- <img alt="Vue logo" src="./assets/logo.png"> -->
     <!-- <HelloWorld msg="Welcome to Your Vue.js App"/> -->
   </div>

@@ -13,6 +13,14 @@
         <h1>Robot Design Contest Panel</h1>
         <Timer :due-time="active.dueTime"/>
         <h1>{{stateText}}</h1>
+      <div>
+
+        <div class="box">
+      <NewGame v-if="startingNewGame"></NewGame>
+      <button @click="startingNewGame = !startingNewGame">{{(startingNewGame?'Cancel':'New Game')}}</button>
+        </div>
+
+      </div>
       </div>
 
       <div class="item">
@@ -31,8 +39,10 @@
 <script>
 import TeamColumnEditor from "./TeamColumnEditor.vue";
 import Timer from "./Timer.vue";
-import {states} from "../lib/constants"
+import constants from "../lib/constants"
+const {states} = constants
 import firebase from '../lib/firebase'
+import NewGame from './NewGame.vue'
 
 const db = firebase.database()
 
@@ -40,7 +50,8 @@ export default {
   name: "panelboard",
   components: {
     TeamColumnEditor,
-    Timer
+    Timer,
+    NewGame
   },
   props: {
     dueTime: Number,
@@ -57,7 +68,8 @@ export default {
     return {
       active: null,
       team0: null,
-      team1: null
+      team1: null,
+      startingNewGame: false
     }
   },
   computed: {
@@ -104,6 +116,10 @@ h4.panelboard{
 }
 h5.panelboard{
   font-size:3em
+}
+
+.box{
+  border: 1px #000 solid
 }
 
 </style>

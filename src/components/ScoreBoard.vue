@@ -29,7 +29,8 @@
 <script>
 import TeamColumn from "./TeamColumn.vue";
 import Timer from "./Timer.vue";
-import {states} from "../lib/constants"
+import constants from "../lib/constants"
+const {states} = constants
 export default {
   name: "ScoreBoard",
   components: {
