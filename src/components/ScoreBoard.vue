@@ -12,8 +12,7 @@
     <div class="item">
       <img alt="Vue logo" src="../assets/logo.png">
       <h1>Robot Design Contest</h1>
-      <Timer :due-time="dueTime"/>
-      <h1>{{stateText}}</h1>
+      <Timer :due-time="dueTime" :start-time="startTime"/>
     </div>
 
     <div class="item">
@@ -29,8 +28,6 @@
 <script>
 import TeamColumn from "./TeamColumn.vue";
 import Timer from "./Timer.vue";
-import constants from "../lib/constants"
-const {states} = constants
 export default {
   name: "ScoreBoard",
   components: {
@@ -41,12 +38,7 @@ export default {
     team0: Object,
     team1: Object,
     dueTime: Number,
-    state: Number
-  },
-  computed: {
-    stateText(){
-      return states[this.state]
-    }
+    startTime: Number
   }
 };
 </script>

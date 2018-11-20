@@ -11,8 +11,8 @@
       
       <div class="item">
         <h1>Robot Design Contest Panel</h1>
-        <Timer :due-time="active.dueTime"/>
-        <h1>{{stateText}}</h1>
+        <Timer :due-time="active.dueTime" :start-time="active.startTime"/>
+        <button @click="startGame">Start Game</button>
       <div>
 
         <div class="box">
@@ -40,7 +40,7 @@
 import TeamColumnEditor from "./TeamColumnEditor.vue";
 import Timer from "./Timer.vue";
 import constants from "../lib/constants"
-const {states} = constants
+const {states,totalTime,stateTime} = constants
 import firebase from '../lib/firebase'
 import NewGame from './NewGame.vue'
 
@@ -72,14 +72,14 @@ export default {
       startingNewGame: false
     }
   },
-  computed: {
-    stateText(){
-      return states[this.active.state]
-    }
-  },
   methods:{
     onTeamChange(){
       db.ref('active').set(this.active)
+    },
+    startGame(){
+      db.ref('active/dueTime').set(Date.now()+totalTime*1000)
+      db.ref('active/startTime').set(Date.now())
+      db.ref('active/state').set(1)
     }
   }
 };
