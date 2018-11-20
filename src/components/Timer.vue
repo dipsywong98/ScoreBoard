@@ -5,9 +5,10 @@
 </div>
 </template>
 <script>
-import { setTimeout, clearTimeout } from 'timers';
+import { setTimeout, clearTimeout, setInterval, clearInterval } from 'timers';
 import constants from "../lib/constants"
-const {states,stateTime} = constants
+import beep from '../lib/beep'
+const {states,stateTime,gameTime} = constants
 export default {
   name: 'Timer',
   mounted(){
@@ -39,16 +40,24 @@ export default {
     }
   },
   methods:{
-    renderTime(){const currTime = Date.now()
-      const left = this.dueTime - currTime
-      if(left <= 0){
+    renderTime(){
+      const currTime = Date.now()
+      const left = Math.ceil((this.dueTime - currTime)/1000) % (gameTime)
+      console.log(left)
+      if(currTime>this.dueTime && left <= 0){
         this.renderedTime = '00:00'
       }else{
-        let s = Math.floor(left/1000%60)
+        let s = Math.floor(left%60)
         if(s<10)s='0'+s
-        const m = Math.floor(left/1000/60%10)
+        const m = Math.floor(left/60%10)
         this.currentTimeout = setTimeout(()=>{this.renderTime()},1000)
         this.renderedTime = `0${m}:${s}`
+      }
+      if(left<=5){
+        beep()
+      }
+      if(this.dueTime<Date.now()){
+        this.longBeepFor(5000)
       }
       if(this.startTime==0){
         this.renderedState = states[0]
@@ -58,6 +67,16 @@ export default {
           else return prev
         },states[0])
       }
+    },
+    longBeepFor(ms){
+      const i = setInterval(()=>{
+        beep()
+        setTimeout(beep,250)
+        setTimeout(beep,500)
+      },1000)
+      setTimeout(()=>{
+        clearInterval(i)
+      },ms)
     }
   }
 }
