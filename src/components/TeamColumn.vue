@@ -54,7 +54,7 @@
 
         .name {
             position: absolute;
-            top: 6vh;
+            top: 6.5vh;
             font-size: 6vh;
             text-shadow: 0 0.5vh 0.5vh rgba(0, 0, 0, 0.4);
             width: 30vw;
