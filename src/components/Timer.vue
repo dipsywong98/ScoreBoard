@@ -1,83 +1,94 @@
 <template>
-<div>
-<h2 class="scoreboard">{{renderedTime}}</h2>
-<h5>{{renderedState}}</h5>
-</div>
+    <div>
+        <h2 class="time">{{renderedTime}}</h2>
+        <h5 class="state">{{renderedState}}</h5>
+    </div>
 </template>
 <script>
-import { setTimeout, clearTimeout, setInterval, clearInterval } from 'timers';
-import constants from "../lib/constants"
-import beep from '../lib/beep'
-const {states,stateTime,gameTime} = constants
-export default {
-  name: 'Timer',
-  mounted(){
-    this.renderTime()
-  },
-  props: {
-    //dueTime in Unix timestamp
-    dueTime: {
-      type:Number,
-      default:Date.now()+1000*60*3
-    },
-    startTime:{
-      type: Number,
-      default:0
+    import {setTimeout, clearTimeout, setInterval, clearInterval} from 'timers';
+    import constants from "../lib/constants"
+    import beep from '../lib/beep'
+
+    const {states, stateTime, gameTime} = constants
+    export default {
+        name: 'Timer',
+        mounted() {
+            this.renderTime()
+        },
+        props: {
+            //dueTime in Unix timestamp
+            dueTime: {
+                type: Number,
+                default: Date.now() + 1000 * 60 * 3
+            },
+            startTime: {
+                type: Number,
+                default: 0
+            }
+        },
+        watch: {
+            dueTime() {
+                // console.log('dueTime Changed',val)
+                clearTimeout(this.currentTimeout)
+                this.renderTime()
+            }
+        },
+        data() {
+            return {
+                renderedTime: '00:00',
+                currentTimeout: null,
+                renderedState: ''
+            }
+        },
+        methods: {
+            renderTime() {
+                const currTime = Date.now()
+                const left = Math.ceil((this.dueTime - currTime) / 1000) % (gameTime)
+                console.log(left)
+                if (currTime > this.dueTime && left <= 0) {
+                    this.renderedTime = '00:00'
+                } else {
+                    let s = Math.floor(left % 60)
+                    if (s < 10) s = '0' + s
+                    const m = Math.floor(left / 60 % 10)
+                    this.currentTimeout = setTimeout(() => {
+                        this.renderTime()
+                    }, 1000)
+                    this.renderedTime = `0${m}:${s}`
+                }
+                if (left <= 5) {
+                    beep()
+                }
+                if (this.dueTime < Date.now()) {
+                    this.longBeepFor(5000)
+                }
+                if (this.startTime === 0) {
+                    this.renderedState = states[0]
+                } else {
+                    this.renderedState = stateTime.reduce((prev, currv, k) => {
+                        if (Date.now() - this.startTime > currv * 1000) return states[k]
+                        else return prev
+                    }, states[0])
+                }
+            },
+            longBeepFor(ms) {
+                const i = setInterval(() => {
+                    beep()
+                    setTimeout(beep, 250)
+                    setTimeout(beep, 500)
+                }, 1000)
+                setTimeout(() => {
+                    clearInterval(i)
+                }, ms)
+            }
+        }
     }
-  },
-  watch:{
-    dueTime(){
-      // console.log('dueTime Changed',val)
-      clearTimeout(this.currentTimeout)
-      this.renderTime()
-    }
-  },
-  data(){
-    return {
-      renderedTime:'00:00',
-      currentTimeout:null,
-      renderedState:''
-    }
-  },
-  methods:{
-    renderTime(){
-      const currTime = Date.now()
-      const left = Math.ceil((this.dueTime - currTime)/1000) % (gameTime)
-      console.log(left)
-      if(currTime>this.dueTime && left <= 0){
-        this.renderedTime = '00:00'
-      }else{
-        let s = Math.floor(left%60)
-        if(s<10)s='0'+s
-        const m = Math.floor(left/60%10)
-        this.currentTimeout = setTimeout(()=>{this.renderTime()},1000)
-        this.renderedTime = `0${m}:${s}`
-      }
-      if(left<=5){
-        beep()
-      }
-      if(this.dueTime<Date.now()){
-        this.longBeepFor(5000)
-      }
-      if(this.startTime==0){
-        this.renderedState = states[0]
-      }else{
-        this.renderedState = stateTime.reduce((prev,currv,k)=>{
-          if(Date.now()-this.startTime>currv*1000)return states[k]
-          else return prev
-        },states[0])
-      }
-    },
-    longBeepFor(ms){
-      const i = setInterval(()=>{
-        beep()
-        setTimeout(beep,250)
-        setTimeout(beep,500)
-      },1000)
-      setTimeout(()=>{
-        clearInterval(i)
-      },ms)
-    }
-  }
-}
 </script>
+<style scoped lang="scss">
+    .time {
+        font-size: 8vh;
+    }
+    .state {
+        font-size: 4vh;
+    }
+</style>

@@ -70,13 +70,13 @@ export default {
 </script>
 
 <style>
-.teamcolumn-root{
+.team-column{
   height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 }
-.teamcolumn-item{
+.team-column-item{
   margin:5em
 }
 </style>

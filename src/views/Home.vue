@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div>
     <div v-if="active">
       <score-board :team0="active.team0" :team1="active.team1" :dueTime="active.dueTime" :state="active.state" :startTime="active.startTime"/>
     </div>
@@ -30,7 +30,7 @@
     // })
 
     export default {
-        name: 'app',
+        name: 'Home',
         components: {
             ScoreBoard,
         },
@@ -47,13 +47,5 @@
     }
 </script>
 
-<style>
-  #app {
-    font-family: 'Avenir', Helvetica, Arial, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    text-align: center;
-    color: #2c3e50;
-    /* margin-top: 60px; */
-  }
+<style scoped lang="scss">
 </style>
