@@ -83,6 +83,8 @@
         justify-content: center;
 
         .scores {
+            position: relative;
+            z-index: 2;
             font-size: 30vh;
             text-shadow: 0 1vh 1vh rgba(0, 0, 0, 0.4);
         }
