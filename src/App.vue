@@ -18,7 +18,7 @@
         width: 100vw;
 
         --red: #bd292e;
-        --gray: #333333;
+        --gray: #2c3e50;
     }
 
     * {
@@ -42,7 +42,7 @@
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
         text-align: center;
-        color: #2c3e50;
+        color: var(--gray);
         position: absolute;
         height: 100%;
         width: 100%;

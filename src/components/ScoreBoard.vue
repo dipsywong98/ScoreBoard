@@ -24,6 +24,9 @@
             <div class="tab top-tab">
                 <h1 class="event-name">Preliminary</h1>
             </div>
+            <div class="logo">
+                <img src="../assets/logo.svg">
+            </div>
             <div class="tab bottom-tab">
                 <Timer :due-time="dueTime" :start-time="startTime"/>
             </div>
@@ -57,6 +60,7 @@
         width: 100%;
         height: 100%;
         overflow: hidden;
+        user-select: none;
     }
 
     .score-layer {
@@ -133,6 +137,14 @@
 
         .event-name {
             font-size: 6vh;
+        }
+
+        .logo {
+            mix-blend-mode: multiply;
+
+            > img {
+                height: 30vh;
+            }
         }
     }
 </style>
