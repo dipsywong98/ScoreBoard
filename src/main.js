@@ -1,23 +1,12 @@
 import Vue from 'vue'
-import VueRouter from 'vue-router'
 import App from './App.vue'
-import HelloWorld from './components/HelloWorld'
-import Panel from './Panel'
+import router from './router'
+import store from './store'
 
 Vue.config.productionTip = false
 
-Vue.use(VueRouter)
-
-const routes = [
-  { path: '/', component: App },
-  { path: '/hello', component: HelloWorld }
-]
-
-const router = new VueRouter({
-  routes
-})
-
 new Vue({
   router,
-  render: h=>h(window.location.href.match('panel')?Panel:App)
+  store,
+  render: h => h(App)
 }).$mount('#app')
