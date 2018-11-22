@@ -20,12 +20,14 @@
                 />
             </div>
         </div>
+        <div class="logo-layer">
+            <div class="logo">
+                <img src="../assets/logo.svg">
+            </div>
+        </div>
         <div class="overlay-layer">
             <div class="tab top-tab">
                 <h1 class="event-name">Preliminary</h1>
-            </div>
-            <div class="logo">
-                <img src="../assets/logo.svg">
             </div>
             <div class="tab bottom-tab">
                 <Timer :due-time="dueTime" :start-time="startTime"/>
@@ -82,6 +84,26 @@
         }
     }
 
+    .logo-layer {
+        position: absolute;
+        top:0;
+        left:0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+        .logo {
+            mix-blend-mode: multiply;
+
+            > img {
+                height: 30vh;
+            }
+        }
+    }
+
     .overlay-layer {
         position: absolute;
         top:0;
@@ -132,17 +154,8 @@
             }
         }
 
-
         .event-name {
             font-size: 6vh;
-        }
-
-        .logo {
-            mix-blend-mode: multiply;
-
-            > img {
-                height: 30vh;
-            }
         }
     }
 </style>
