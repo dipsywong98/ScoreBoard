@@ -1,10 +1,10 @@
 <template>
   <div>
     <select v-model="team0Id">
-      <option v-for="(team,k) in teams" :value="k" :key="team[0]">{{team[0]}}</option>
+      <option v-for="(team,k) in teams" :value="k" :key="team.enName">({{team.groupNumber}}) {{team.enName}}</option>
     </select>
     <select v-model="team1Id">
-      <option v-for="(team,k) in teams" :value="k" :key="team[0]">{{team[0]}}</option>
+      <option v-for="(team,k) in teams" :value="k" :key="team.enName">({{team.groupNumber}}) {{team.enName}}</option>
     </select>
     <button @click="pushNewMatch">
       Push New Match
