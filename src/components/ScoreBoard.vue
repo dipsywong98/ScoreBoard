@@ -116,20 +116,18 @@
         }
 
         .top-tab {
-            padding-top: 5vh;
-            margin-top: -2vh;
-
             &::before {
+                border-top-left-radius: 0;
+                border-top-right-radius: 0;
                 transform: rotateX(-15deg);
             }
         }
 
 
         .bottom-tab {
-            padding-bottom: 5vh;
-            margin-bottom: -2vh;
-
             &::before {
+                border-bottom-left-radius: 0;
+                border-bottom-right-radius: 0;
                 transform: rotateX(15deg);
             }
         }
