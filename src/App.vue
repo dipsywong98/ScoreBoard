@@ -1,11 +1,11 @@
 <template>
-    <div id="app">
-        <router-view class="view"/>
-        <div id="nav">
-            <router-link to="/">Scoreboard</router-link>
-            |
-            <router-link to="/about">About</router-link>
-        </div>
+  <div id="app">
+    <div id="nav">
+      <router-link to="/">Scoreboard</router-link>
+      |
+      <router-link to="/about">About</router-link>
+      |
+      <router-link to="/panel">Panel</router-link>
     </div>
 </template>
 

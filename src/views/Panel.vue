@@ -1,5 +1,6 @@
 <template>
   <div>
+    blablabla
     <div v-if="!auth">
       Logging you in...
     </div>
@@ -9,8 +10,8 @@
   </div>
 </template>
 <script>
-import firebase from './lib/firebase'
-import PanelBoard from './components/PanelBoard'
+import firebase from '../lib/firebase'
+import PanelBoard from '../components/PanelBoard'
 
 // const db = firebase.database()
 
