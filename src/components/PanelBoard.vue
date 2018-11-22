@@ -7,7 +7,7 @@
         </div>
         <div class="item">
           <h1>Robot Design Contest Panel</h1>
-          <Timer :due-time="active.dueTime" :start-time="active.startTime"/>
+          <Timer :due-time="active.dueTime" :start-time="active.startTime" :silent="true"/>
           <button @click="startGame">Start Game</button>
           <div>
             <div class="box">

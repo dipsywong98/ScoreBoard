@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <router-view class="view"></router-view>
     <div id="nav">
       <router-link to="/">Scoreboard</router-link>
       |
@@ -7,7 +8,6 @@
       |
       <router-link to="/panel">Panel</router-link>
     </div>
-    <router-view></router-view>
   </div>
 </template>
 
@@ -18,7 +18,7 @@
         position: absolute;
         min-height: 100vh;
         width: 100vw;
-
+        // height: 100vh;
         --red: #bd292e;
         --gray: #2c3e50;
     }
