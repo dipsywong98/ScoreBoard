@@ -24,6 +24,10 @@
             startTime: {
                 type: Number,
                 default: 0
+            },
+            silent: {
+              type:Boolean,
+              default: false
             }
         },
         watch: {
@@ -56,11 +60,13 @@
                     }, 1000)
                     this.renderedTime = `0${m}:${s}`
                 }
-                if (left <= 5) {
-                    beep()
-                }
-                if (this.dueTime < Date.now()) {
-                    this.longBeepFor(5000)
+                if(!this.silent){
+                  if (left <= 5) {
+                      beep()
+                  }
+                  if (this.dueTime < Date.now()) {
+                      this.longBeepFor(5000)
+                  }
                 }
                 if (this.startTime === 0) {
                     this.renderedState = states[0]

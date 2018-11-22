@@ -16,6 +16,7 @@
                 @click="startingNewGame = !startingNewGame"
               >{{(startingNewGame?'Cancel':'New Game')}}</button>
             </div>
+            <button @click="beep">beep</button>
           </div>
         </div>
         <div class="item">
@@ -33,6 +34,7 @@ import constants from "../lib/constants"
 const {states,totalTime,stateTime} = constants
 import firebase from '../lib/firebase'
 import NewGame from './NewGame.vue'
+import beep from '../lib/beep'
 
 const db = firebase.database()
 
@@ -71,7 +73,8 @@ export default {
       db.ref('active/dueTime').set(Date.now()+totalTime*1000)
       db.ref('active/startTime').set(Date.now())
       db.ref('active/state').set(1)
-    }
+    },
+    beep
   }
 };
 </script>
