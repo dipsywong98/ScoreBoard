@@ -1,6 +1,5 @@
 <template>
   <div>
-    blablabla
     <div v-if="!auth">
       Logging you in...
     </div>

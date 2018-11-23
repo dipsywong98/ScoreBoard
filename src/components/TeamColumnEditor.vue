@@ -5,7 +5,9 @@
     <p>groupNumber: <input v-model="value.teamname.groupNumber" ref="teamid" @change="onChange"></p>
     <p>Scores: <input v-model="value.scores" ref="scores" @change="onChange"></p>
     <p>Violations: <input v-model="value.violations" ref="violations" @change="onChange"></p>
-    <p>EndGame: <input type="checkbox" v-model="value.endGame" ref="endGame" @change="onChange"></p>
+    <!-- <p>EndGame: <input type="checkbox" v-model="value.endGame" ref="endGame" @change="onChange"></p> -->
+    <button class="button" @click="onEndGame">EndGame</button>
+    <button class="button" @click="onWin">Win</button>
     <p>Color:<select v-model="value.color" ref="color" @change="onChange">
       <option value="red">red</option>
       <option value="blue">blue</option>
@@ -19,7 +21,7 @@
 import scores from '../lib/score-points'
 export default {
   name: 'TeamColomnEditor',
-  props: ['value'],
+  props: {'value':Object,'onEndGame':Function,'onWin':Function},
   computed: {
     bgc(){
       const {color} = this.value
@@ -70,5 +72,8 @@ export default {
 }
 .team-column-item{
   margin:5em
+}
+.button{
+  margin:20px
 }
 </style>

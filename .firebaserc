@@ -1,0 +1,6 @@
+{
+  "projects": {
+    "sb": "scoreboard-d",
+    "default": "scoreboard-d"
+  }
+}

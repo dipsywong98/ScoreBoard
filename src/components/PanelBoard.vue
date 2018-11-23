@@ -3,19 +3,33 @@
     <div v-if="active!==null">
       <div class="flex">
         <div class="item">
-          <team-column-editor v-model="team0" @input="onTeamChange"/>
+          <team-column-editor
+            v-model="team0"
+            @input="onTeamChange"
+            :on-end-game="()=>onEndGame(0)"
+            :on-win="()=>onWin(0)"
+          />
         </div>
         <div class="item">
           <h1>Robot Design Contest Panel</h1>
-          <Timer :due-time="active.dueTime" :start-time="active.startTime" :silent="true" :onDue="onDue"/>
+          <Timer
+            :due-time="active.dueTime"
+            :start-time="active.startTime"
+            :silent="true"
+            :onDue="onDue"
+          />
           <h4>End Game: {{endGameTeamname && endGameTeamname.enName || 'NONE'}}</h4>
-          <p>result:<select v-model="active.result" ref="activeResult" @change="updateResult">
-            <option value="">No result</option>
-            <option :value="teamWinString(0)">{{teamWinString(0)}}</option>
-            <option :value="teamWinString(1)">{{teamWinString(1)}}</option>
-            <option value="draw">draw</option>
-            </select></p>
+          <p>
+            result:
+            <select v-model="active.result" ref="activeResult" @change="updateResult">
+              <option value="">No result</option>
+              <option :value="teamWinString(0)">{{teamWinString(0)}}</option>
+              <option :value="teamWinString(1)">{{teamWinString(1)}}</option>
+              <option value="draw">draw</option>
+            </select>
+          </p>
           <button @click="startGame">Start Game</button>
+          <!-- <button @click="startPreparation">Start Preparation</button> -->
           <div>
             <div class="box">
               <NewGame v-if="startingNewGame"></NewGame>
@@ -27,7 +41,12 @@
           </div>
         </div>
         <div class="item">
-          <team-column-editor v-model="team1" @input="onTeamChange"/>
+          <team-column-editor
+            v-model="team1"
+            @input="onTeamChange"
+            :on-end-game="()=>onEndGame(1)"
+            :on-win="()=>onWin(1)"
+          />
         </div>
       </div>
     </div>
@@ -95,18 +114,43 @@ export default {
       }
     },
     onDue(){
-      if(this.active.team0.scores > this.active.team1.scores){
-        this.active.result = this.teamWinString(0)
-      }else if(this.active.team0.scores < this.active.team1.scores){
-        this.active.result = this.teamWinString(1)
-      }else{
-        this.active.result = 'draw'
-      }
-      this.updateResult()
+      // if(this.active.team0.scores > this.active.team1.scores){
+      //   this.active.result = this.teamWinString(0)
+      // }else if(this.active.team0.scores < this.active.team1.scores){
+      //   this.active.result = this.teamWinString(1)
+      // }else{
+      //   this.active.result = 'draw'
+      // }
+      // this.updateResult()
     },
     updateResult(){
       console.log('update',this.active.result)
       db.ref('active/result').set(this.active.result)
+    },
+    onEndGame(id){
+      console.log('on end game')
+      this.onWin(id)
+      switch(id){
+        case 0:
+        this.active.team0.state = 'End Game';break;
+        case 1:
+        this.active.team1.state = 'End Game';break;
+      }
+      db.ref('active').set(this.active)
+    },
+    onWin(id){
+      switch(id){
+        case 0:
+        this.active.team0.state = 'Win';
+        this.active.team1.state = 'Lose';
+        break;
+        case 1:
+        this.active.team1.state = 'Win';
+        this.active.team0.state = 'Lose';
+        break;
+      }
+      db.ref('active').set(this.active)
+      
     }
   },
   computed:{
