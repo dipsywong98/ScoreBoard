@@ -19,17 +19,9 @@
             :onDue="onDue"
           />
           <!-- <h4>End Game: {{endGameTeamname && endGameTeamname.enName || 'NONE'}}</h4> -->
-          <p>
-            result:
-          </p>
-          <p>
-          <div>
-            {{active.team0.teamname.groupNumber}}: {{active.team0.state}}
-          </div>
-          <div>
-            {{active.team1.teamname.groupNumber}}: {{active.team1.state}}
-          </div>
-          </p>
+          <p>result:</p>
+          <div>{{active.team0.teamname.groupNumber}}: {{active.team0.state}}</div>
+          <div>{{active.team1.teamname.groupNumber}}: {{active.team1.state}}</div>
           <button @click="startGame">Start Game</button>
           <!-- <button @click="startPreparation">Start Preparation</button> -->
           <div>

@@ -2,9 +2,9 @@
   <div :style="bgc">
     <p>enName: <input v-model="value.teamname.enName" ref="teamenname" @change="onChange"></p>
     <p>cnName: <input v-model="value.teamname.cnName" ref="teamcnname" @change="onChange"></p>
-    <p>groupNumber: <input v-model="value.teamname.groupNumber" ref="teamid" @change="onChange"></p>
-    <p>Scores: <input v-model="value.scores" ref="scores" @change="onChange"></p>
-    <p>Violations: <input v-model="value.violations" ref="violations" @change="onChange"></p>
+    <p>groupNumber: <input v-model="value.teamname.groupNumber" ref="teamid" @change="onChange" type="number"></p>
+    <p>Scores: <input v-model="value.scores" ref="scores" @change="onChange" type="number"></p>
+    <p>Violations: <input v-model="value.violations" ref="violations" @change="onChange" type="number"></p>
     <!-- <p>EndGame: <input type="checkbox" v-model="value.endGame" ref="endGame" @change="onChange"></p> -->
     <button class="button" @click="onEndGame">EndGame</button>
     <button class="button" @click="onWin">Win</button>
@@ -40,10 +40,13 @@ export default {
   },
   methods:{
     onChange(){
-      this.$emit('input',{
-        ...this.value,
-        // event.target.value
-      })
+      if(this.validate()){
+        this.$emit('input',{
+          ...this.value,
+          // event.target.value
+        })
+      }
+      
     },
     scoreItemClick(item){
       if(item.score){
@@ -58,6 +61,24 @@ export default {
       this.$emit('input',{
         ...this.value
       })
+    },
+    validate(){
+      if(typeof(this.value.scores)!==typeof(123)){
+        try{
+          this.value.scores = Number(this.value.scores)
+        }catch(e){
+          return false
+        }
+      }
+      if(typeof(this.value.violations)!==typeof(123)){
+        try{
+          this.value.violations = Number(this.value.violations)
+        }catch(e){
+          return false
+        }
+      }
+      console.log('hi')
+      return true
     }
   }
 }
