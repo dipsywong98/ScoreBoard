@@ -9,8 +9,8 @@ const constants = {
   states: [
     'About to start',
     'Preperation',
-    'Game Playing (Auto)',
-    'Game Playing (Manual Allowed)',
+    'Auto Game Time',
+    'Manual Game Time',
     'Game End'
   ],
 

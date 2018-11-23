@@ -1,6 +1,6 @@
 <template>
   <div :style="bgc">
-    <p>enName: <input v-model="value.teamname.enName" ref="teamenname" @change="onChange"></p>
+    <p style="margin-top:0px">enName: <input v-model="value.teamname.enName" ref="teamenname" @change="onChange"></p>
     <p>cnName: <input v-model="value.teamname.cnName" ref="teamcnname" @change="onChange"></p>
     <p>groupNumber: <input v-model="value.teamname.groupNumber" ref="teamid" @change="onChange" type="number"></p>
     <p>Scores: <input v-model="value.scores" ref="scores" @change="onChange" type="number"></p>
@@ -13,7 +13,10 @@
       <option value="blue">blue</option>
       <option value="green">green</option>
       </select></p>
-    <button v-for="scoreItem in scores" :key="scoreItem.name" @click="scoreItemClick(scoreItem)">{{scoreItem.name}}</button>
+      <div v-for="rows in scores" :key="rows.group" style="margin-top:30px">
+        <div>{{rows.group}}</div>
+    <button class="button" v-for="scoreItem in rows.buttons" :key="scoreItem.name" @click="scoreItemClick(scoreItem)">{{scoreItem.name}}</button>
+      </div>
   </div>
 </template>
 
@@ -95,6 +98,6 @@ export default {
   margin:5em
 }
 .button{
-  margin:20px
+  margin:8px 20px
 }
 </style>
