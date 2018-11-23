@@ -1,6 +1,8 @@
 <template>
   <div :style="bgc">
-    <p>TeamName: <input v-model="value.teamname" ref="teamname" @change="onChange"></p>
+    <p>enName: <input v-model="value.teamname.enName" ref="teamenname" @change="onChange"></p>
+    <p>cnName: <input v-model="value.teamname.cnName" ref="teamcnname" @change="onChange"></p>
+    <p>groupNumber: <input v-model="value.teamname.groupNumber" ref="teamid" @change="onChange"></p>
     <p>Scores: <input v-model="value.scores" ref="scores" @change="onChange"></p>
     <p>Violations: <input v-model="value.violations" ref="violations" @change="onChange"></p>
     <p>Color:<select v-model="value.color" ref="color" @change="onChange">
@@ -9,20 +11,6 @@
       <option value="green">green</option>
       </select></p>
     <button v-for="scoreItem in scores" :key="scoreItem.name" @click="scoreItemClick(scoreItem)">{{scoreItem.name}}</button>
-    <!-- <div class="teamcolumn-item">
-
-    <h1 class="scoreboard">
-      {{value.teamname}}
-    </h1>
-    </div>
-    <div class="teamcolumn-item">
-    <h3 class="scoreboard">Scores</h3>
-    <h1 class="scoreboard">{{value.scores}}</h1>
-    </div>
-    <div class="teamcolumn-item">
-    <h4 class="scoreboard">Violations</h4>
-    <h5 class="scoreboard">{{value.violations}}</h5>
-    </div> -->
   </div>
 </template>
 

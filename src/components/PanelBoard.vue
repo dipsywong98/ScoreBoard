@@ -1,40 +1,31 @@
 <template>
-<div>
-  <div v-if="active!==null">
-    <div class="flex">
-      <div class="item">
-        <team-column-editor
-          v-model="team0"
-          @input="onTeamChange"
-        />
-      </div>
-      
-      <div class="item">
-        <h1>Robot Design Contest Panel</h1>
-        <Timer :due-time="active.dueTime" :start-time="active.startTime"/>
-        <button @click="startGame">Start Game</button>
-      <div>
-
-        <div class="box">
-      <NewGame v-if="startingNewGame"></NewGame>
-      <button @click="startingNewGame = !startingNewGame">{{(startingNewGame?'Cancel':'New Game')}}</button>
+  <div>
+    <div v-if="active!==null">
+      <div class="flex">
+        <div class="item">
+          <team-column-editor v-model="team0" @input="onTeamChange"/>
         </div>
-
-      </div>
-      </div>
-
-      <div class="item">
-        <team-column-editor
-          v-model="team1"
-          @input="onTeamChange"
-        />
+        <div class="item">
+          <h1>Robot Design Contest Panel</h1>
+          <Timer :due-time="active.dueTime" :start-time="active.startTime" :silent="true"/>
+          <button @click="startGame">Start Game</button>
+          <div>
+            <div class="box">
+              <NewGame v-if="startingNewGame"></NewGame>
+              <button
+                @click="startingNewGame = !startingNewGame"
+              >{{(startingNewGame?'Cancel':'New Game')}}</button>
+            </div>
+            <button @click="beep">beep</button>
+          </div>
+        </div>
+        <div class="item">
+          <team-column-editor v-model="team1" @input="onTeamChange"/>
+        </div>
       </div>
     </div>
+    <div v-else>Loading</div>
   </div>
-  <div v-else>
-    Loading
-  </div>
-</div>
 </template>
 <script>
 import TeamColumnEditor from "./TeamColumnEditor.vue";
@@ -43,6 +34,7 @@ import constants from "../lib/constants"
 const {states,totalTime,stateTime} = constants
 import firebase from '../lib/firebase'
 import NewGame from './NewGame.vue'
+import beep from '../lib/beep'
 
 const db = firebase.database()
 
@@ -57,12 +49,13 @@ export default {
     dueTime: Number,
     state: Number
   },
-  mounted(){
+  async mounted(){
     db.ref('active').on('value',snapshot=>{
       this.active = snapshot.val()
       this.team0 = this.active.team0
       this.team1 = this.active.team1
     })
+    console.log(JSON.stringify(await db.ref('teams').once('value')))
   },
   data(){
     return {
@@ -80,7 +73,8 @@ export default {
       db.ref('active/dueTime').set(Date.now()+totalTime*1000)
       db.ref('active/startTime').set(Date.now())
       db.ref('active/state').set(1)
-    }
+    },
+    beep
   }
 };
 </script>
@@ -93,33 +87,32 @@ export default {
   align-items: center;
 }
 
-.item{
-  width:100%;
+.item {
+  width: 100%;
   height: 98vh;
 }
 
-.panelboard{
-  margin:0
+.panelboard {
+  margin: 0;
 }
 
-h1.panelboard{
-  font-size:7em
+h1.panelboard {
+  font-size: 7em;
 }
-h2.panelboard{
-  font-size:6em
+h2.panelboard {
+  font-size: 6em;
 }
-h3.panelboard{
-  font-size:5em
+h3.panelboard {
+  font-size: 5em;
 }
-h4.panelboard{
-  font-size:4em
+h4.panelboard {
+  font-size: 4em;
 }
-h5.panelboard{
-  font-size:3em
-}
-
-.box{
-  border: 1px #000 solid
+h5.panelboard {
+  font-size: 3em;
 }
 
+.box {
+  border: 1px #000 solid;
+}
 </style>
