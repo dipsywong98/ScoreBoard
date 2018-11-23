@@ -28,7 +28,8 @@
             silent: {
               type:Boolean,
               default: false
-            }
+            },
+            onDue: Function
         },
         watch: {
             dueTime() {
@@ -51,6 +52,7 @@
                 console.log(left)
                 if (currTime > this.dueTime && left <= 0) {
                     this.renderedTime = '00:00'
+                    if(this.onDue)this.onDue()
                 } else {
                     let s = Math.floor(left % 60)
                     if (s < 10) s = '0' + s
