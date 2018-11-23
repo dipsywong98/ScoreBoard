@@ -1,17 +1,18 @@
 <template>
-    <div class="team-column" :class="[bgc, isLeft?'left':'right']">
+    <div class="team-column" :class="[isLeft?'left':'right', winClass]">
+        <div class="gradient-layer" :class="bgc"></div>
         <div class="name-layer">
             <h1 class="name">
-                {{teamname.enName}}
+                {{model.teamname.enName}}
             </h1>
-            <div class="group-number">{{teamname.groupNumber}}</div>
+            <div class="group-number">{{model.teamname.groupNumber}}</div>
         </div>
         <div class="scores-layer">
-            <h1 class="scores">{{scores}}</h1>
+            <h1 class="scores">{{model.scores}}</h1>
         </div>
         <div class="violation-layer">
             <h5 class="violation-desc">Violations</h5>
-            <h4 class="violation-count">{{violations}}</h4>
+            <h4 class="violation-count">{{model.violations}}</h4>
         </div>
     </div>
 </template>
@@ -21,15 +22,15 @@
         name: 'TeamColumn',
         props: {
             color: String,
-            teamname: Object,
-            teamNumber: Number,
-            scores: Number,
-            violations: Number,
+            model: Object,
             isLeft: Boolean
         },
         computed: {
             bgc() {
                 return this.color + "-gradient";
+            },
+            winClass() {
+                return ["Win", "End Game"].indexOf(this.model.state) > -1  ? "win" : "";
             }
         }
     }
@@ -45,12 +46,22 @@
         padding-top: 3vh;
     }
 
+    .gradient-layer {
+        position:absolute;
+        width: 100%;
+        height: 100%;
+        top:0;
+        transition: 1s transform ease;
+        z-index:0;
+    }
+
     .name-layer {
         position: absolute;
         top: 0;
         left: 0;
         width: 100%;
         height: 100%;
+        z-index:2;
 
         .name {
             position: absolute;
@@ -81,10 +92,10 @@
         display: flex;
         flex-direction: column;
         justify-content: center;
+        z-index:2;
 
         .scores {
             position: relative;
-            z-index: 2;
             font-size: 30vh;
             text-shadow: 0 1vh 1vh rgba(0, 0, 0, 0.4);
         }
@@ -96,6 +107,7 @@
         bottom: 0;
         font-size: 5vh;
         text-shadow: 0 0.4vh 0.4vh rgba(0, 0, 0, 0.4);
+        z-index:2;
 
         .violation-desc {
             margin-bottom: 2vh;
@@ -116,6 +128,11 @@
             left:0;
             border-radius: 0 $br $br 0;
         }
+
+        .gradient-layer {
+            left:0;
+            transform-origin: left;
+        }
     }
 
     .right {
@@ -128,6 +145,16 @@
             right:0;
             border-radius: $br 0 0 $br;
         }
+
+        .gradient-layer {
+            right:0;
+            transform-origin: right;
+        }
+    }
+
+    .win .gradient-layer {
+        z-index:1;
+        transform: scale(2);
     }
 
     .red-gradient {
