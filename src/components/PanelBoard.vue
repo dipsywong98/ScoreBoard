@@ -8,6 +8,7 @@
         <div class="item">
           <h1>Robot Design Contest Panel</h1>
           <Timer :due-time="active.dueTime" :start-time="active.startTime" :silent="true"/>
+          <h4>End Game: {{endGameTeamname && endGameTeamname.enName || 'NONE'}}</h4>
           <button @click="startGame">Start Game</button>
           <div>
             <div class="box">
@@ -35,6 +36,7 @@ const {states,totalTime,stateTime} = constants
 import firebase from '../lib/firebase'
 import NewGame from './NewGame.vue'
 import beep from '../lib/beep'
+import getEndGame from '../lib/get-endgame'
 
 const db = firebase.database()
 
@@ -73,8 +75,14 @@ export default {
       db.ref('active/dueTime').set(Date.now()+totalTime*1000)
       db.ref('active/startTime').set(Date.now())
       db.ref('active/state').set(1)
+      this.startingNewGame = false
     },
     beep
+  },
+  computed:{
+    endGameTeamname(){
+      return getEndGame(this.active)
+    }
   }
 };
 </script>

@@ -5,6 +5,7 @@
     <p>groupNumber: <input v-model="value.teamname.groupNumber" ref="teamid" @change="onChange"></p>
     <p>Scores: <input v-model="value.scores" ref="scores" @change="onChange"></p>
     <p>Violations: <input v-model="value.violations" ref="violations" @change="onChange"></p>
+    <p>EndGame: <input type="checkbox" v-model="value.endGame" ref="endGame" @change="onChange"></p>
     <p>Color:<select v-model="value.color" ref="color" @change="onChange">
       <option value="red">red</option>
       <option value="blue">blue</option>
@@ -48,6 +49,9 @@ export default {
       }
       if(item.violation){
         this.value.violations += item.violation
+      }
+      if(item.endGame && !this.value.endGame){
+        this.value.endGame = true
       }
       this.$emit('input',{
         ...this.value

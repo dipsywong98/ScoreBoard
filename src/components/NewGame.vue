@@ -41,12 +41,14 @@ export default {
           teamname: this.teams[this.team0Id],
           scores: 0,
           violations: 0,
+          endGame: false
         },
         team1:{
           ...currActive.team1,
           teamname: this.teams[this.team1Id],
           scores: 0,
-          violations: 0
+          violations: 0,
+          endGame: false
         },
         state: 0,
         dueTime: 0

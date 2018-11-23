@@ -10,5 +10,9 @@ export default [
   {
     name: 'violation',
     violation: 1
+  },
+  {
+    name: 'End Game',
+    endGame: true
   }
 ]
