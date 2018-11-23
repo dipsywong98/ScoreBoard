@@ -7,8 +7,14 @@
         </div>
         <div class="item">
           <h1>Robot Design Contest Panel</h1>
-          <Timer :due-time="active.dueTime" :start-time="active.startTime" :silent="true"/>
+          <Timer :due-time="active.dueTime" :start-time="active.startTime" :silent="true" :onDue="onDue"/>
           <h4>End Game: {{endGameTeamname && endGameTeamname.enName || 'NONE'}}</h4>
+          <p>result:<select v-model="active.result" ref="activeResult" @change="updateResult">
+            <option value="">No result</option>
+            <option :value="teamWinString(0)">{{teamWinString(0)}}</option>
+            <option :value="teamWinString(1)">{{teamWinString(1)}}</option>
+            <option value="draw">draw</option>
+            </select></p>
           <button @click="startGame">Start Game</button>
           <div>
             <div class="box">
@@ -57,7 +63,7 @@ export default {
       this.team0 = this.active.team0
       this.team1 = this.active.team1
     })
-    console.log(JSON.stringify(await db.ref('teams').once('value')))
+    // console.log(JSON.stringify(await db.ref('teams').once('value')))
   },
   data(){
     return {
@@ -77,7 +83,31 @@ export default {
       db.ref('active/state').set(1)
       this.startingNewGame = false
     },
-    beep
+    beep,
+    teamWinString(id){
+      switch(id){
+        case 0:
+        return `${this.active.team0.color} wins`
+        case 1:
+        return `${this.active.team1.color} wins`
+        default:
+        return `draw`
+      }
+    },
+    onDue(){
+      if(this.active.team0.scores > this.active.team1.scores){
+        this.active.result = this.teamWinString(0)
+      }else if(this.active.team0.scores < this.active.team1.scores){
+        this.active.result = this.teamWinString(1)
+      }else{
+        this.active.result = 'draw'
+      }
+      this.updateResult()
+    },
+    updateResult(){
+      console.log('update',this.active.result)
+      db.ref('active/result').set(this.active.result)
+    }
   },
   computed:{
     endGameTeamname(){

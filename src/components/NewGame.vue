@@ -51,7 +51,8 @@ export default {
           endGame: false
         },
         state: 0,
-        dueTime: 0
+        dueTime: 0,
+        result: ''
       })
     }
   }
