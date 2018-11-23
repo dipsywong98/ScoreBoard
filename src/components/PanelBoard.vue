@@ -191,4 +191,10 @@ h5.panelboard {
 .box {
   border: 1px #000 solid;
 }
+
+@media screen and (max-width: 600px){
+.flex{
+  flex-wrap: wrap;
+}
+}
 </style>
