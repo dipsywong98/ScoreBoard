@@ -18,15 +18,17 @@
             :silent="true"
             :onDue="onDue"
           />
-          <h4>End Game: {{endGameTeamname && endGameTeamname.enName || 'NONE'}}</h4>
+          <!-- <h4>End Game: {{endGameTeamname && endGameTeamname.enName || 'NONE'}}</h4> -->
           <p>
             result:
-            <select v-model="active.result" ref="activeResult" @change="updateResult">
-              <option value="">No result</option>
-              <option :value="teamWinString(0)">{{teamWinString(0)}}</option>
-              <option :value="teamWinString(1)">{{teamWinString(1)}}</option>
-              <option value="draw">draw</option>
-            </select>
+          </p>
+          <p>
+          <div>
+            {{active.team0.teamname.groupNumber}}: {{active.team0.state}}
+          </div>
+          <div>
+            {{active.team1.teamname.groupNumber}}: {{active.team1.state}}
+          </div>
           </p>
           <button @click="startGame">Start Game</button>
           <!-- <button @click="startPreparation">Start Preparation</button> -->
