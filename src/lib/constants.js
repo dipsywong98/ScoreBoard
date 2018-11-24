@@ -8,7 +8,7 @@ const teams = [{ 'enName': 'LG1', 'cnName': 'LG 一樓', 'groupNumber': 1 },{ 'e
 const constants = {
   states: [
     'About to start',
-    'Preperation',
+    'Preparation',
     'Auto Game Time',
     'Manual Game Time',
     'Game End'

@@ -62,7 +62,7 @@
                     }, 1000)
                     this.renderedTime = `0${m}:${s}`
                 }
-                if(!this.silent && Date.now() - this.dueTime < 5000){
+                if(!this.silent && (left) > -1){
                   if (left <= 5) {
                       beep()
                   }
