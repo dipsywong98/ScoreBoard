@@ -29,7 +29,9 @@
               type:Boolean,
               default: false
             },
-            onDue: Function
+            onDue: Function,
+            onTick: Function,
+            state: Number
         },
         watch: {
             dueTime() {
@@ -42,13 +44,13 @@
             return {
                 renderedTime: '00:00',
                 currentTimeout: null,
-                renderedState: ''
+                // renderedState: ''
             }
         },
         methods: {
             renderTime() {
                 const currTime = Date.now()
-                const left = Math.ceil((this.dueTime - currTime) / 1000) % (gameTime)
+                const left = Math.ceil((this.dueTime - currTime) / 1000) 
                 console.log(left)
                 if (currTime > this.dueTime && left <= 0) {
                     this.renderedTime = '00:00'
@@ -70,14 +72,7 @@
                       this.longBeepFor(5000)
                   }
                 }
-                if (this.startTime === 0) {
-                    this.renderedState = states[0]
-                } else {
-                    this.renderedState = stateTime.reduce((prev, currv, k) => {
-                        if (Date.now() - this.startTime > currv * 1000) return states[k]
-                        else return prev
-                    }, states[0])
-                }
+                if(this.onTick)this.onTick(left)
             },
             longBeepFor(ms) {
                 const i = setInterval(() => {
@@ -88,6 +83,11 @@
                 setTimeout(() => {
                     clearInterval(i)
                 }, ms)
+            }
+        },
+        computed:{
+            renderedState(){
+                return states[this.state]
             }
         }
     }

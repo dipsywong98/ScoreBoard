@@ -17,12 +17,15 @@
             :start-time="active.startTime"
             :silent="true"
             :onDue="onDue"
+            :state="active.state"
+            :on-tick="onTick"
           />
           <!-- <h4>End Game: {{endGameTeamname && endGameTeamname.enName || 'NONE'}}</h4> -->
           <p>result:</p>
           <div>{{active.team0.teamname.groupNumber}}: {{active.team0.state}}</div>
           <div>{{active.team1.teamname.groupNumber}}: {{active.team1.state}}</div>
-          <button @click="startGame">Start Game</button>
+          <button @click="startPreparation" :disabled="active.state !== 0">Start Preparation</button>
+          <button @click="startGame" :disabled="active.state !== 2">Start Game</button>
           <!-- <button @click="startPreparation">Start Preparation</button> -->
           <div>
             <div class="box">
@@ -50,7 +53,7 @@
 <script>
 import TeamColumnEditor from "./TeamColumnEditor.vue";
 import Timer from "./Timer.vue";
-import constants from "../lib/constants"
+import constants, {gameTime, forcedAutoTime, preperationTime} from "../lib/constants"
 const {states,totalTime,stateTime} = constants
 import firebase from '../lib/firebase'
 import NewGame from './NewGame.vue'
@@ -90,10 +93,16 @@ export default {
     onTeamChange(){
       db.ref('active').set(this.active)
     },
-    startGame(){
-      db.ref('active/dueTime').set(Date.now()+totalTime*1000)
+    startPreparation(){
+      db.ref('active/dueTime').set(Date.now()+preperationTime*1000)
       db.ref('active/startTime').set(Date.now())
       db.ref('active/state').set(1)
+      this.startingNewGame = false
+    },
+    startGame(){
+      db.ref('active/dueTime').set(Date.now()+gameTime*1000)
+      db.ref('active/startTime').set(Date.now())
+      db.ref('active/state').set(3)
       this.startingNewGame = false
     },
     beep,
@@ -108,14 +117,12 @@ export default {
       }
     },
     onDue(){
-      // if(this.active.team0.scores > this.active.team1.scores){
-      //   this.active.result = this.teamWinString(0)
-      // }else if(this.active.team0.scores < this.active.team1.scores){
-      //   this.active.result = this.teamWinString(1)
-      // }else{
-      //   this.active.result = 'draw'
-      // }
-      // this.updateResult()
+      if(this.active.state === 1){
+        this.active.state = 2
+      }else if(this.active.state === 4){
+        this.active.state = 5
+      }
+      db.ref('active/state').set(this.active.state)
     },
     updateResult(){
       console.log('update',this.active.result)
@@ -145,6 +152,13 @@ export default {
       }
       db.ref('active').set(this.active)
       
+    },
+    onTick(left){
+      if(this.active.state === 3 && left < (gameTime - forcedAutoTime)){
+        console.log(left)
+        this.active.state = 4 
+      }
+      db.ref('active/state').set(this.active.state)
     }
   },
   computed:{

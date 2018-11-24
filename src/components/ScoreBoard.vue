@@ -26,7 +26,7 @@
                 <h1 class="event-name">Preliminary</h1>
             </div>
             <div class="tab bottom-tab">
-                <Timer :due-time="dueTime" :start-time="startTime"/>
+                <Timer :due-time="dueTime" :start-time="startTime" :state="active.state"/>
             </div>
         </div>
         <div class="anim-layer">
@@ -65,6 +65,7 @@
             Timer
         },
         props: {
+            active: Object,
             team0: Object,
             team1: Object,
             dueTime: Number,

@@ -1,7 +1,7 @@
 <template>
   <div>
     <div v-if="active">
-      <score-board :team0="active.team0" :team1="active.team1" :dueTime="active.dueTime" :state="active.state" :startTime="active.startTime"/>
+      <score-board :team0="active.team0" :team1="active.team1" :dueTime="active.dueTime" :state="active.state" :startTime="active.startTime" :active="active"/>
     </div>
     <div v-else>Loading</div>
     <!-- <img alt="Vue logo" src="./assets/logo.png"> -->

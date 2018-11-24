@@ -7,8 +7,9 @@ const teams = [{ 'enName': 'LG1', 'cnName': 'LG 一樓', 'groupNumber': 1 },{ 'e
 
 const constants = {
   states: [
-    'About to start',
+    'About to Prepare',
     'Preparation',
+    'About to Start',
     'Auto Game Time',
     'Manual Game Time',
     'Game End'
@@ -20,6 +21,7 @@ const constants = {
   stateTime: [
     -1, //about to start
     0,
+    -1,
     preperationTime,
     preperationTime + forcedAutoTime,
     totalTime
@@ -34,4 +36,4 @@ const constants = {
 
 export default constants
 
-export {teams}
+export {teams,gameTime,preperationTime,forcedAutoTime}
