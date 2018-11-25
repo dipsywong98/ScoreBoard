@@ -1,8 +1,15 @@
 <template>
   <div class="team-name" :class="bgClass">
     <div v-if="team">
-      <select :value="value" @change="onChange" ref="picker">
+      <!-- {{team.enName}} -->
+      <select v-if="teams" :value="team.enName" @change="onChange" ref="picker">
+        <option value="">Not determined</option>
         <option v-for="t in teams" :key="t.enName" :value="t.enName">{{t.groupNumber}} {{t.enName}}</option>
+      </select>
+      <select :value="team.color" @change="onChange" ref="picker2">
+        <option value="red">red</option>
+        <option value="blue">blue</option>
+        <option value="green">green</option>
       </select>
     </div>
     <div v-if="['Final', '3rd'].indexOf(match.matchType) > -1">
@@ -40,6 +47,7 @@ export default {
   mounted(){
     db.ref('teams').on('value',snapshot=>{
       this.teams = snapshot.val()
+      this.$forceUpdate()
     })
   },
   props: {
@@ -55,7 +63,7 @@ export default {
         
   data(){
     return {
-      teams: []
+      teams: null
     }
   },
   computed: {
@@ -79,6 +87,7 @@ export default {
           
     onChange(){
       this.$emit('pick',this.$refs.picker.value)
+      this.$emit('colorpick',this.$refs.picker2.value)
       console.log(this.$refs.picker.value)
     }
   }

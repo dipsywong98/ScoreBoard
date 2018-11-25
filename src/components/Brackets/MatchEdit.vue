@@ -18,13 +18,13 @@ matchType: String,
     <div class="match" v-if="match.teams.length >= 2">
         <div class="match-group" :class="{'playing-glow': match && match.isMatchPlaying}">
             <div>
-            <TeamPick @pick="(value)=>onPick(0,value)" v-model="match.teams[0].enName" :team="match.teams[0]" :is-match-top="true" :match="match"></TeamPick>
+            <TeamPick @colorpick="value=>onColorPick(0,value)" @pick="(value)=>onPick(0,value)" v-model="match.teams[0].enName" :team="match.teams[0]" :is-match-top="true" :match="match"></TeamPick>
             <button @click="changeTeamState(0,'Win')">Win</button>
             <button @click="changeTeamState(0,'End Game')">EndGame</button>
             <button @click="changeTeamState(0,'')">No Result</button>
             </div>
             <div>
-            <TeamPick @pick="(value)=>onPick(1,value)" v-model="match.teams[1].enName" :team="match.teams[1]" :is-match-top="true" :match="match"></TeamPick>
+            <TeamPick @colorpick="value=>onColorPick(1,value)"  @pick="(value)=>onPick(1,value)" v-model="match.teams[1].enName" :team="match.teams[1]" :is-match-top="true" :match="match"></TeamPick>
             <button @click="changeTeamState(1,'Win')">Win</button>
             <button @click="changeTeamState(1,'End Game')">EndGame</button>
             <button @click="changeTeamState(1,'')">No Result</button>
@@ -89,6 +89,10 @@ matchType: String,
             },
             onPick(id,value){
                 this.match.teams[id].enName = value
+                this.onChange()
+            },
+            onColorPick(id,value){
+                this.match.teams[id].color = value
                 this.onChange()
             }
         }

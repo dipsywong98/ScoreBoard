@@ -1,6 +1,6 @@
 <template>
     <div class="tree">
-        <div>
+        <div v-if="brackets!==null">
             <MatchEdit :match="brackets.match1" :onEdit="(data)=>onEdit(1,data)" style="top:0; left:4vw;"/>
             <MatchEdit :match="brackets.match2" :onEdit="(data)=>onEdit(2,data)" style="top:24vh; left:4vw;"/>
             <MatchEdit :match="brackets.match3" :onEdit="(data)=>onEdit(3,data)" style="top:49vh; left:4vw;"/>
@@ -16,7 +16,7 @@
 <script>
     import MatchEdit from "../components/Brackets/MatchEdit";
     import firebase from "../lib/firebase"
-    import defaultBracket from '../lib/default-bracket'
+    // import defaultBracket from '../lib/default-bracket'
 
     const db = firebase.database()
 
@@ -24,13 +24,34 @@
         name: "Tree",
         components: {MatchEdit},
         mounted(){
-            db.ref('brackets').on('value',snapshot=>{
-                this.brackets = snapshot.val()
-            })
+            var provider = new firebase.auth.GithubAuthProvider();
+            firebase.auth().signInWithPopup(provider).then((result) => {
+            // This gives you a GitHub Access Token. You can use it to access the GitHub API.
+            this.token = result.credential.accessToken;
+            // The signed-in user info.
+            this.user = result.user;
+            // ...
+            this.auth = true
+                db.ref('brackets').on('value',snapshot=>{
+                    this.brackets = snapshot.val()
+                    
+                    this.$forceUpdate()
+                })
+            }).catch(function(error) {
+            // Handle Errors here.
+            // var errorCode = error.code;
+            // var errorMessage = error.message;
+            // // The email of the user's account used.
+            // var email = error.email;
+            // // The firebase.auth.AuthCredential type that was used.
+            // var credential = error.credential;
+            // ...
+            window.alert(`error occurs when signing in \ncode:${error.code}\nmessage:${error.message}`)
+            });
         },
         data() {
             return {
-                brackets: defaultBracket
+                brackets: null
             }
         },
         methods:{
