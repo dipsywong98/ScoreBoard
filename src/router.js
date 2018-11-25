@@ -44,6 +44,14 @@ export default new Router({
             title: 'Brackets',
         },
       component: ()=> import('./views/Brackets.vue')
+    },
+    {
+      path: '/brackets_panel',
+      name: 'brackets_panel',
+        meta: {
+            title: 'Brackets Panel',
+        },
+      component: ()=> import('./views/BracketsPanel.vue')
     }
   ]
 })
