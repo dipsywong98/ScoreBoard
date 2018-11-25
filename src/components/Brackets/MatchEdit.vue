@@ -32,6 +32,7 @@ matchType: String,
             <div>
             <div class="is-playing"><label :for="'in-' + _uid + 'playing'">Is Playing:</label> <input :id="'in-' + _uid + 'playing'" @change="onChange" type="checkbox" v-model="match.isMatchPlaying"></div>
             </div>
+            <div class="match-name">{{match.name}}</div>
             <!-- <TeamName :team="match.teams[0]" :is-match-top="true" :match="match"/>
             <TeamName :team="match.teams[1]" :is-match-top="false" :match="match"/> -->
         </div>
