@@ -24,13 +24,13 @@ matchType: String,
             <button @click="changeTeamState(0,'')">No Result</button>
             </div>
             <div>
-            <TeamPick @colorpick="value=>onColorPick(1,value)"  @pick="(value)=>onPick(1,value)" v-model="match.teams[1].enName" :team="match.teams[1]" :is-match-top="true" :match="match"></TeamPick>
+            <TeamPick @colorpick="value=>onColorPick(1,value)"  @pick="(value)=>onPick(1,value)" v-model="match.teams[1].enName" :team="match.teams[1]" :is-match-top="false" :match="match"></TeamPick>
             <button @click="changeTeamState(1,'Win')">Win</button>
             <button @click="changeTeamState(1,'End Game')">EndGame</button>
             <button @click="changeTeamState(1,'')">No Result</button>
             </div>
             <div>
-            Playing:<input @change="onChange" type="checkbox" v-model="match.isMatchPlaying">
+            <div class="is-playing"><label :for="'in-' + _uid + 'playing'">Is Playing:</label> <input :id="'in-' + _uid + 'playing'" @change="onChange" type="checkbox" v-model="match.isMatchPlaying"></div>
             </div>
             <!-- <TeamName :team="match.teams[0]" :is-match-top="true" :match="match"/>
             <TeamName :team="match.teams[1]" :is-match-top="false" :match="match"/> -->
@@ -39,12 +39,11 @@ matchType: String,
 </template>
 
 <script>
-    import TeamName from "./TeamName";
     import TeamPick from "./TeamPick"
 
     export default {
         name: "Match",
-        components: {TeamName,TeamPick},
+        components: {TeamPick},
         props: {
             match: Object,
             onEdit: Function
@@ -108,6 +107,24 @@ matchType: String,
         position: absolute;
         width: $match-width;
         outline: 1px solid transparent;
+
+        .match-group {
+            border: 5px solid #000;
+            margin-right: -10px;
+
+            &.playing-glow {
+                border-color: #0ff;
+            }
+        }
+    }
+
+    button {
+        position: relative;
+        z-index: 3;
+    }
+
+    .team-name {
+        margin-bottom: -20px;
     }
 
     .playing-glow {
@@ -124,6 +141,13 @@ matchType: String,
 
     .green-edge {
         background-color: var(--team-green);
+    }
+
+    .is-playing {
+        [type="checkbox"] {
+            transform: scale(1.5);
+            margin: 10px;
+        }
     }
 
     @keyframes glow {

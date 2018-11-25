@@ -1,6 +1,7 @@
 <template>
     <div class="team-name" :class="bgClass">
-        <div v-if="team">
+        <img v-if="team && team.state === 'End Game'" src="../../assets/house_graphics.svg" class="end-game-icon">
+        <div v-if="team" class="name">
             {{team.enName}}
         </div>
         <div v-if="['Final', '3rd'].indexOf(match.matchType) > -1">
@@ -8,7 +9,6 @@
             <div class="medal second" v-if="match.matchType === 'Final' && !win && team && team.state">2nd</div>
             <div class="medal third" v-if="match.matchType === '3rd' && win && team && team.state">3rd</div>
         </div>
-        <img v-if="team && team.state === 'End Game'" src="../../assets/house_graphics.svg" class="end-game-icon">
         <div v-if="canAdvance" :class="[team && team.color + '-edge edge', toChampionMatch && 'champion-match']"></div>
         <div class="advancement" v-if="canAdvance" :class="[team && team.color + '-edge', isMatchTop ? 'top' : 'down', match.isTop ? 'go-down' : 'go-up', toChampionMatch && 'champion-match', longEdge && 'long-edge']"></div>
         <div class="advancement2" v-if="canAdvance" :class="[team && team.color + '-edge', isMatchTop ? 'top' : 'down', match.isTop ? 'go-down' : 'go-up', toChampionMatch && 'champion-match', longEdge && 'long-edge']"></div>
@@ -20,22 +20,18 @@
         name: "TeamName",
         props: {
             team: Object,
-            /**
-             * Expects "Win"|"Lose"|"Playing"|"Champion"|"2nd"|"3rd"|"Nothing"
-             */
-            winningState: String,
             match: Object,
             isMatchTop: Boolean,
         },
         computed: {
             bgClass() {
-                return this.team && (["Win", "End Game", null].indexOf(this.team.state) > -1 || ["Final", "Semi Final"].indexOf(this.match.matchType) > -1) && this.team.color + "-gradient";
+                return this.team && (["Win", "End Game", ""].indexOf(this.team.state) > -1 || ["Final", "Semi Final"].indexOf(this.match.matchType) > -1) && this.team.enName !== "" && this.team.color + "-gradient";
             },
             win() {
                 return ["Win", "End Game"].indexOf(this.team.state) > -1;
             },
             canAdvance() {
-                return (this.win || this.match.matchType === "Semi Final") && ["Final", "3rd"].indexOf(this.match.matchType) < 0;
+                return (this.win || this.match.matchType === "Semi Final" && this.team.state === "Lose") && ["Final", "3rd"].indexOf(this.match.matchType) < 0 && this.team.enName !== "";
             },
             toChampionMatch() {
                 return this.win && this.match.matchType === "Semi Final";
@@ -60,8 +56,14 @@
         align-items: start;
         padding-left: 4vw;
         color: #aaa;
-        background: linear-gradient(to bottom, #e8eeef 0%,#cdd3d3 100%);
-        font-size: 3vh;
+        background: linear-gradient(to bottom, rgba(255, 255, 255, 0.6) 0%, rgba(205, 211, 211, 0.9) 100%);
+        font-size: 2.2vh;
+
+        &[class$="gradient"] .name {
+            position: relative;
+            z-index: 2;
+            text-shadow: 0 0.25vh 0.5vh rgba(0, 0, 0, 0.4);
+        }
     }
     .red-gradient {
         background: linear-gradient(to bottom, #d64f4f 0%, #94304b 100%);
@@ -138,7 +140,7 @@
 
     .advancement2 {
         height: $line-width;
-        width: 2.5vw;
+        width: calc(2vw + #{$line-width});
         position: absolute;
         left: calc(100% + 2vw - #{$line-width});
         border-radius: 1vh 0 0 1vh;
@@ -207,8 +209,9 @@
         display: flex;
         flex-direction: column;
         justify-content: center;
-        padding: 2vh;
+        padding: 1vw 0;
         width: 3.5vw;
+        text-shadow: 0 -0.1vh 0.1vh rgba(0, 0, 0, 0.1), 0 0.1vh 0.2vh rgba(255, 255, 255, 0.4);
 
         &.first {
             background: linear-gradient(to bottom, #ffffaa 0%,#ffda38 100%);
@@ -229,7 +232,8 @@
     .end-game-icon {
         height: 100%;
         position:absolute;
-        top:0;
-        right:-3vh;
+        top:1vh;
+        right:-5vh;
+        opacity: 0.8;
     }
 </style>
