@@ -92,7 +92,8 @@ export default {
   },
   methods:{
     onTeamChange(){
-      db.ref('active').set(this.active)
+      db.ref('active/team0').set(this.active.team0)
+      db.ref('active/team1').set(this.active.team1)
     },
     startPreparation(){
       db.ref('active/dueTime').set(Date.now()+preperationTime*1000)
@@ -118,9 +119,9 @@ export default {
       }
     },
     onDue(){
-      if(this.active.state === 1){
+      if(this.active.state <= 1){
         this.active.state = 2
-      }else if(this.active.state === 4){
+      }else if(this.active.state <= 4){
         this.active.state = 5
       }
       db.ref('active/state').set(this.active.state)
@@ -138,7 +139,8 @@ export default {
         case 1:
         this.active.team1.state = 'End Game';break;
       }
-      db.ref('active').set(this.active)
+      db.ref('active/team0').set(this.active.team0)
+      db.ref('active/team1').set(this.active.team1)
     },
     onWin(id){
       switch(id){
@@ -151,10 +153,16 @@ export default {
         this.active.team0.state = 'Lose';
         break;
       }
-      db.ref('active').set(this.active)
+      db.ref('active/team0').set(this.active.team0)
+      db.ref('active/team1').set(this.active.team1)
       
     },
     onTick(left){
+      if(this.active.state === 0 && left > 0){
+        this.active.state = 1
+      } else if(this.active.state === 2 && left > 0){
+        this.active.state = 3
+      }
       if(this.active.state === 3 && left < (gameTime - forcedAutoTime)){
         console.log(left)
         this.active.state = 4 
@@ -164,7 +172,8 @@ export default {
     clearWin(){
       this.active.team1.state = '';
       this.active.team0.state = '';
-      db.ref('active').set(this.active)
+      db.ref('active/team0').set(this.active.team0)
+      db.ref('active/team1').set(this.active.team1)
     }
   },
   computed:{
