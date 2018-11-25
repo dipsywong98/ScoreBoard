@@ -23,7 +23,7 @@
         </div>
         <div class="overlay-layer">
             <div class="tab top-tab">
-                <h1 class="event-name">Preliminary</h1>
+                <h1 class="event-name">Finals</h1>
             </div>
             <div class="tab bottom-tab">
                 <Timer :due-time="dueTime" :start-time="startTime" :state="active.state"/>
@@ -72,7 +72,7 @@
             startTime: Number
         },
         computed: {
-            topDownWinClass() {
+            winningTeam() {
                 return ([this.team0, this.team1].filter(team => team.state === "Win"))[0] || null;
             },
             endTeam() {
