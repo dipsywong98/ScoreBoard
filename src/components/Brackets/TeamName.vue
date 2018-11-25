@@ -4,9 +4,9 @@
             {{team.enName}}
         </div>
         <div v-if="['Final', '3rd'].indexOf(match.matchType) > -1">
-            <div class="medal first" v-if="match.matchType === 'Final' && win">1st</div>
-            <div class="medal second" v-if="match.matchType === 'Final' && !win">2nd</div>
-            <div class="medal third" v-if="match.matchType === '3rd' && win">3rd</div>
+            <div class="medal first" v-if="match.matchType === 'Final' && win && team && team.state">1st</div>
+            <div class="medal second" v-if="match.matchType === 'Final' && !win && team && team.state">2nd</div>
+            <div class="medal third" v-if="match.matchType === '3rd' && win && team && team.state">3rd</div>
         </div>
         <img v-if="team && team.state === 'End Game'" src="../../assets/house_graphics.svg" class="end-game-icon">
         <div v-if="canAdvance" :class="[team && team.color + '-edge edge', toChampionMatch && 'champion-match']"></div>
@@ -61,6 +61,7 @@
         padding-left: 4vw;
         color: #aaa;
         background: linear-gradient(to bottom, #e8eeef 0%,#cdd3d3 100%);
+        font-size: 3vh;
     }
     .red-gradient {
         background: linear-gradient(to bottom, #d64f4f 0%, #94304b 100%);
