@@ -24,6 +24,7 @@
           <p>result:</p>
           <div>{{active.team0.teamname.groupNumber}}: {{active.team0.state}}</div>
           <div>{{active.team1.teamname.groupNumber}}: {{active.team1.state}}</div>
+          <button @click="clearWin">Clear Win</button>
           <button @click="startPreparation" :disabled="active.state !== 0">Start Preparation</button>
           <button @click="startGame" :disabled="active.state !== 2">Start Game</button>
           <!-- <button @click="startPreparation">Start Preparation</button> -->
@@ -159,6 +160,11 @@ export default {
         this.active.state = 4 
       }
       db.ref('active/state').set(this.active.state)
+    },
+    clearWin(){
+      this.active.team1.state = '';
+      this.active.team0.state = '';
+      db.ref('active').set(this.active)
     }
   },
   computed:{
