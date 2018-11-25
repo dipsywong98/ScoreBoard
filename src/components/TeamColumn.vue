@@ -29,7 +29,7 @@
             bgc() {
                 return this.color + "-gradient";
             },
-            winClass() {
+            win() {
                 return ["Win", "End Game"].indexOf(this.model.state) > -1  ? "win" : "";
             }
         }

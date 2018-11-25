@@ -72,7 +72,7 @@
             startTime: Number
         },
         computed: {
-            winningTeam() {
+            topDownWinClass() {
                 return ([this.team0, this.team1].filter(team => team.state === "Win"))[0] || null;
             },
             endTeam() {
