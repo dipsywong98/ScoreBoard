@@ -1,15 +1,15 @@
 <template>
     <div class="tree">
         <div v-if="brackets!==null">
-            <MatchEdit :match="brackets.match1" :onEdit="(data)=>onEdit(1,data)" style="top:0; left:4vw;"/>
-            <MatchEdit :match="brackets.match2" :onEdit="(data)=>onEdit(2,data)" style="top:24vh; left:4vw;"/>
-            <MatchEdit :match="brackets.match3" :onEdit="(data)=>onEdit(3,data)" style="top:49vh; left:4vw;"/>
-            <MatchEdit :match="brackets.match4" :onEdit="(data)=>onEdit(4,data)" style="top:74vh; left:4vw;"/>
-            <MatchEdit :match="brackets.match5" :onEdit="(data)=>onEdit(5,data)" style="top:12vh; left:28vw"/>
-            <MatchEdit :match="brackets.match6" :onEdit="(data)=>onEdit(6,data)" style="top:61vh; left:28vw"/>
-            <MatchEdit :match="brackets.match7" :onEdit="(data)=>onEdit(7,data)" style="top:36vh; left:52vw"/>
-            <MatchEdit :match="brackets.match8" :onEdit="(data)=>onEdit(8,data)" style="top:36vh; left:78vw"/>
-            <button @click="clear" style="position:absolute;right:0,top:0;width:100px;height:30px">Clear All</button>
+            <MatchEdit :match="brackets.match1" :onEdit="(data)=>onEdit(1,data)" style="top:2vh; left:4vw;"/>
+            <MatchEdit :match="brackets.match2" :onEdit="(data)=>onEdit(2,data)" style="top:26vh; left:4vw;"/>
+            <MatchEdit :match="brackets.match3" :onEdit="(data)=>onEdit(3,data)" style="top:51vh; left:4vw;"/>
+            <MatchEdit :match="brackets.match4" :onEdit="(data)=>onEdit(4,data)" style="top:76vh; left:4vw;"/>
+            <MatchEdit :match="brackets.match5" :onEdit="(data)=>onEdit(5,data)" style="top:14vh; left:28vw"/>
+            <MatchEdit :match="brackets.match6" :onEdit="(data)=>onEdit(6,data)" style="top:63vh; left:28vw"/>
+            <MatchEdit :match="brackets.match7" :onEdit="(data)=>onEdit(7,data)" style="top:38vh; left:52vw"/>
+            <MatchEdit :match="brackets.match8" :onEdit="(data)=>onEdit(8,data)" style="top:38vh; left:78vw"/>
+            <button @click="clear" style="position:absolute;right:0;top:0;width:100px;height:30px">Clear All</button>
         </div>
         <div v-else>LOADING</div>
     </div>
@@ -62,7 +62,7 @@
             },
             clear(){
                 let r = prompt('are you sure (Y/N)')
-                if(r=='Y')db.ref(`brackets`).set(defaultBracket)
+                if(r==='Y')db.ref(`brackets`).set(defaultBracket)
             }
         }
     }

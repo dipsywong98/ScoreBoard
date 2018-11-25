@@ -1,6 +1,7 @@
 export default {
   match1: {
       isTop: true,
+      name: "",
       teams: [
           {
               enName: "",
@@ -18,6 +19,7 @@ export default {
   },
   match2: {
       isTop: false,
+      name: "",
       teams: [
           {
               enName: "",
@@ -35,6 +37,7 @@ export default {
   },
   match3: {
       isTop: true,
+      name: "",
       teams: [
           {
               enName: "",
@@ -52,6 +55,7 @@ export default {
   },
   match4: {
       isTop: false,
+      name: "",
       teams: [
           {
               enName: "",
@@ -69,6 +73,7 @@ export default {
   },
   match5: {
       isTop: true,
+      name: "",
       teams: [
           {
               enName: "",
@@ -86,6 +91,7 @@ export default {
   },
   match6: {
       isTop: false,
+      name: "",
       teams: [
           {
               enName: "",
@@ -103,6 +109,7 @@ export default {
   },
   match7: {
       isTop: false,
+      name: "Third Place Match",
       teams: [
           {
               enName: "",
@@ -120,6 +127,7 @@ export default {
   },
   match8: {
       isTop: false,
+      name: "Champion Match",
       teams: [
           {
               enName: "",

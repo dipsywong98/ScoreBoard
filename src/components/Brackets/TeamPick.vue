@@ -2,11 +2,20 @@
   <div class="team-name" :class="bgClass">
     <div v-if="team">
       <!-- {{team.enName}} -->
-      <select v-if="teams" :value="team.enName" @change="onChange" ref="picker">
+      <img
+              v-if="team && team.state === 'End Game'"
+              src="../../assets/house_graphics.svg"
+              class="end-game-icon"
+      >
+      <div
+              v-if="team && team.state === 'Win'"
+              class="end-game-icon"
+      >Win</div>
+      <select :value="team.enName" @change="onChange" ref="picker" style="width: 150px" v-if="teams">
         <option value="">Not determined</option>
         <option v-for="t in teams" :key="t.enName" :value="t.enName">{{t.groupNumber}} {{t.enName}}</option>
       </select>
-      <select :value="team.color" @change="onChange" ref="picker2">
+      <select :value="team.color" @change="onChange" ref="picker2" style="width: 50px">
         <option value="red">red</option>
         <option value="blue">blue</option>
         <option value="green">green</option>
@@ -17,11 +26,6 @@
       <div class="medal second" v-if="match.matchType === 'Final' && !win && team && team.state">2nd</div>
       <div class="medal third" v-if="match.matchType === '3rd' && win && team && team.state">3rd</div>
     </div>
-    <img
-      v-if="team && team.state === 'End Game'"
-      src="../../assets/house_graphics.svg"
-      class="end-game-icon"
-    >
     <div
       v-if="canAdvance"
       :class="[team && team.color + '-edge edge', toChampionMatch && 'champion-match']"
@@ -53,10 +57,6 @@ export default {
   props: {
     value: String,
       team: Object,
-      /**
-       * Expects "Win"|"Lose"|"Playing"|"Champion"|"2nd"|"3rd"|"Nothing"
-       */
-      winningState: String,
       match: Object,
       isMatchTop: Boolean,
   },
@@ -68,13 +68,13 @@ export default {
   },
   computed: {
       bgClass() {
-          return this.team && (["Win", "End Game", null].indexOf(this.team.state) > -1 || ["Final", "Semi Final"].indexOf(this.match.matchType) > -1) && this.team.color + "-gradient";
+          return this.team && (["Win", "End Game", ""].indexOf(this.team.state) > -1 || ["Final", "Semi Final"].indexOf(this.match.matchType) > -1) && this.team.enName !== "" && this.team.color + "-gradient";
       },
       win() {
           return ["Win", "End Game"].indexOf(this.team.state) > -1;
       },
       canAdvance() {
-          return (this.win || this.match.matchType === "Semi Final") && ["Final", "3rd"].indexOf(this.match.matchType) < 0;
+          return (this.win || this.match.matchType === "Semi Final" && this.team.state === "Lose") && ["Final", "3rd"].indexOf(this.match.matchType) < 0 && this.team.enName !== "";
       },
       toChampionMatch() {
           return this.win && this.match.matchType === "Semi Final";
@@ -103,9 +103,9 @@ $match-height: 8vh;
   height: $match-height;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: start;
   align-items: start;
-  padding-left: 4vw;
+  padding-left: 3vw;
   color: #aaa;
   background: linear-gradient(to bottom, #e8eeef 0%, #cdd3d3 100%);
   font-size: 3vh;
@@ -167,7 +167,7 @@ $match-height: 8vh;
 
       &.long-edge {
         height: $long-height + $match-height * 1.5;
-        top: -$match-height * 2.5 - 1vh;
+        top: -$match-height * 2.5 - 1vh
       }
     }
 
@@ -184,7 +184,7 @@ $match-height: 8vh;
 
 .advancement2 {
   height: $line-width;
-  width: 2.5vw;
+  width: calc(2vw + #{$line-width});
   position: absolute;
   left: calc(100% + 2vw - #{$line-width});
   border-radius: 1vh 0 0 1vh;
@@ -196,10 +196,10 @@ $match-height: 8vh;
 
   &.top {
     &.go-up {
-      top: -1vh;
+      top:-1vh;
 
       &.long-edge {
-        top: -1vh - $match-height * 1.5;
+        top:-1vh - $match-height * 1.5;
       }
     }
 
@@ -222,10 +222,10 @@ $match-height: 8vh;
     }
 
     &.go-down {
-      bottom: -1vh;
+      bottom:-1vh;
 
       &.long-edge {
-        bottom: -1vh - $match-height * 1.5;
+        bottom:-1vh - $match-height * 1.5;
       }
     }
   }
@@ -233,7 +233,7 @@ $match-height: 8vh;
 
 .edge {
   position: absolute;
-  left: 100%;
+  left:100%;
   top: 4vh - $line-width / 2;
   width: 2vw;
   height: $line-width;
@@ -241,7 +241,7 @@ $match-height: 8vh;
 
   &.champion-match {
     width: calc(100% + 8vw);
-    z-index: 2;
+    z-index:2;
   }
 }
 
@@ -253,8 +253,8 @@ $match-height: 8vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 2vh;
-  width: 3.5vw;
+  padding: 2vh 0;
+  width: 3vw;
 
   &.first {
     background: linear-gradient(to bottom, #ffffaa 0%, #ffda38 100%);
@@ -273,9 +273,12 @@ $match-height: 8vh;
 }
 
 .end-game-icon {
-  height: 100%;
+  height: 50%;
   position: absolute;
-  top: 0;
-  right: -3vh;
+  bottom: 0;
+  right: 0;
+  color: #fff;
+  font-size: 2vh;
+  line-height: 4vh;
 }
 </style>

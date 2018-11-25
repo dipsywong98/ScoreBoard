@@ -20,6 +20,7 @@ matchType: String,
             <TeamName :team="match.teams[0]" :is-match-top="true" :match="match"/>
             <TeamName :team="match.teams[1]" :is-match-top="false" :match="match"/>
         </div>
+        <div class="match-name">{{match.name}}</div>
     </div>
 </template>
 
@@ -77,6 +78,11 @@ matchType: String,
 
     .green-edge {
         background-color: var(--team-green);
+    }
+
+    .match-name {
+        margin-top: -$match-height*2 - 4vh;
+        font-size: 2.5vh;
     }
 
     @keyframes glow {
