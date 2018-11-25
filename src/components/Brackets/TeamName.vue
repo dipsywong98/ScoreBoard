@@ -61,6 +61,7 @@
         padding-left: 4vw;
         color: #aaa;
         background: linear-gradient(to bottom, #e8eeef 0%,#cdd3d3 100%);
+        font-size: 3vh;
     }
     .red-gradient {
         background: linear-gradient(to bottom, #d64f4f 0%, #94304b 100%);
