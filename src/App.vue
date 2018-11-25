@@ -21,6 +21,10 @@
         // height: 100vh;
         --red: #bd292e;
         --gray: #2c3e50;
+
+        --team-red: #d64f4f;
+        --team-blue: #516cd6;
+        --team-green: #50d354;
     }
 
     * {

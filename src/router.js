@@ -11,6 +11,9 @@ export default new Router({
     {
       path: '/',
       name: 'home',
+      meta: {
+          title: 'Score Board',
+      },
       component: Home
     },
     {
@@ -25,6 +28,22 @@ export default new Router({
       path: '/panel',
       name: 'panel',
       component: ()=> import('./views/Panel.vue')
+    },
+    {
+      path: '/timer',
+      name: 'timer',
+        meta: {
+            title: 'Timer',
+        },
+      component: ()=> import('./views/Time.vue')
+    },
+    {
+      path: '/brackets',
+      name: 'brackets',
+        meta: {
+            title: 'Brackets',
+        },
+      component: ()=> import('./views/Brackets.vue')
     }
   ]
 })
