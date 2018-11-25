@@ -27,7 +27,7 @@ export default {
           {
               enName: "",
               color: "blue",
-              state: "Win"
+              state: ""
           }
       ],
       isMatchPlaying: false,
@@ -39,7 +39,7 @@ export default {
           {
               enName: "",
               color: "red",
-              state: "Win"
+              state: ""
           },
           {
               enName: "",
@@ -56,7 +56,7 @@ export default {
           {
               enName: "",
               color: "red",
-              state: "Win"
+              state: ""
           },
           {
               enName: "",

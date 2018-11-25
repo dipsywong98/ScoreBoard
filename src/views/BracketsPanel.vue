@@ -9,14 +9,16 @@
             <MatchEdit :match="brackets.match6" :onEdit="(data)=>onEdit(6,data)" style="top:61vh; left:28vw"/>
             <MatchEdit :match="brackets.match7" :onEdit="(data)=>onEdit(7,data)" style="top:36vh; left:52vw"/>
             <MatchEdit :match="brackets.match8" :onEdit="(data)=>onEdit(8,data)" style="top:36vh; left:78vw"/>
+            <button @click="clear" style="position:absolute;right:0,top:0;width:100px;height:30px">Clear All</button>
         </div>
+        <div v-else>LOADING</div>
     </div>
 </template>
 
 <script>
     import MatchEdit from "../components/Brackets/MatchEdit";
     import firebase from "../lib/firebase"
-    // import defaultBracket from '../lib/default-bracket'
+    import defaultBracket from '../lib/default-bracket'
 
     const db = firebase.database()
 
@@ -57,6 +59,10 @@
         methods:{
             onEdit(id,data){
                 db.ref(`brackets/match${id}`).set(data)
+            },
+            clear(){
+                let r = prompt('are you sure (Y/N)')
+                if(r=='Y')db.ref(`brackets`).set(defaultBracket)
             }
         }
     }
